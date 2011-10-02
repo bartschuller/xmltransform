@@ -1,6 +1,8 @@
 package org.smop.xmltransform.runtime
 
 import com.codecommit.antixml._
+import collection.SortedMap
+import math.round
 
 /**
  * Base class for XML transforms.
@@ -26,7 +28,7 @@ abstract class Transform {
    * Bogus. Needs added priorities and not pick the first but the one with the highest priority which matches
    */
   def applyTemplate(node: Node): Group[Node] = {
-    templates.find(_.isDefinedAt(node)).get.apply(node) match {
+    orderedTemplates.find(_.isDefinedAt(node)).get.apply(node) match {
       case g: Group[_] => g
       case n: Node => Group(n)
       case ns: scala.xml.NodeSeq => ns.convert
@@ -34,13 +36,17 @@ abstract class Transform {
     }
   }
 
-  var templates: List[PartialFunction[Node, Any]] = Nil
+  def orderedTemplates = templates.values.flatten
+
+  var templates = SortedMap.empty[Int, List[PartialFunction[Node, Any]]](Ordering.Int.reverse)
 
   /**
    * Registers a template with the transform. Last one matching wins.
    */
-  def template(priority: Double = 1)(pf: PartialFunction[Node, Any]) {
-    templates = pf :: templates
+  def template(priority: Float = 1)(pf: PartialFunction[Node, Any]) {
+    val prio: Int = round(1000F*priority)
+    val list = templates.getOrElse(prio, Nil)
+    templates += (prio -> (pf :: list))
   }
   
   /**
