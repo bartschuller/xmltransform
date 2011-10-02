@@ -1,0 +1,14 @@
+XML Transform
+=============
+Bart Schuller <Bart.Schuller@gmail.com>
+v. 0.1, 2011-10-02
+
+== What
+
+This is an experiment in Scala XML processing. It aims to add the concept
+of _push_ based processing and template matching to Scala.
+
+== Instructions
+
+Run `sbt` 0.11.0 and type `run` to see the working demo.
+
