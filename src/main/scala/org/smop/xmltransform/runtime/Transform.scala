@@ -25,7 +25,8 @@ abstract class Transform {
   }
 
   /**
-   * Bogus. Needs added priorities and not pick the first but the one with the highest priority which matches
+   * Picks the highest priority template which matches and executes it.
+   * The result is converted to a Group[Node]
    */
   def applyTemplate(node: Node): Group[Node] = {
     orderedTemplates.find(_.isDefinedAt(node)).get.apply(node) match {

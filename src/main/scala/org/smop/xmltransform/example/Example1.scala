@@ -53,5 +53,19 @@ object Example1 extends App {
   val output = trans.transform(input)
   println("---- output ----")
   println(output)
-  
+
+//<html>
+//      <head>
+//        <title>
+//          Hello, World!
+//        </title>
+//      </head>
+//      <body>
+//
+//  <h1>HELLO, WORLD!</h1>
+//  <p>HEY, HOW YA DOIN'?</p>
+//  <p><b>WATCH OUT.</b></p>
+//
+//      </body>
+//    </html>
 }
